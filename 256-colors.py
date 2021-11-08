@@ -25,7 +25,7 @@ def cube_colors(order: str = None):
     default_order = "rbg"
     if not order or len(order) != 3 or sorted(order) != sorted(default_order):
         order = default_order
-        print(f"Invalid order, defaulting to {order}\n")
+        print(f"  Invalid order, defaulting to {order}\n")
     for a in range(6):
         for b in range(6):
             for c in range(6):
@@ -34,32 +34,25 @@ def cube_colors(order: str = None):
 
 
 def main(order: str = None):
-    for fb in [38, 48]:  # Foreground and Background values
-        if fb == 38:
-            print("Foreground\n")
-        elif fb == 48:
-            print("Background\n")
+    for fb, title in ((38, "Foreground"), (48, "Background")):  # Foreground and Background values
+        print(f"{title}\n")
         # ANSI colors
         for color in range(16):  # Colors from 0 to 15
             if color == 0:
                 print("  Standard colors")
             elif color == 8:
                 print("  High-intensity colors")
-            print(get_ansi_color(color, fb), end="")
-            if (color + 1) % 8 == 0:
-                print()
+            end = "\n" if (color + 1) % 8 == 0 else ""
+            print(get_ansi_color(color, fb), end=end)
         print(f"\n  216 colors - cube (order = {order})")
         for i, color in enumerate(cube_colors(order)):  # Colors from 16 to 2321
             # Display the color
-            print(get_ansi_color(color, fb), end="")
-            # Display 6 colors per lines
-            if (i + 1) % 6 == 0:
-                print()
+            end = "\n" if (i + 1) % 6 == 0 else ""
+            print(get_ansi_color(color, fb), end=end)
         print("\n  Greyscale colors")
         for color in range(232, 256):  # Colors from 232 to 255
-            print(get_ansi_color(color, fb), end="")
-            if (color + 1) % 8 == 0:
-                print()
+            end = "\n" if (color + 1) % 8 == 0 else ""
+            print(get_ansi_color(color, fb), end=end)
         print()
 
 
